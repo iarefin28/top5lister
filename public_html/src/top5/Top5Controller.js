@@ -4,7 +4,7 @@
  * This file provides responses for all user interface interactions.
  * 
  * @author McKilla Gorilla
- * @author ?
+ * @author Ishan Arefin
  */
 export default class Top5Controller {
     constructor() {
@@ -19,7 +19,7 @@ export default class Top5Controller {
     initHandlers() {
         // SETUP THE TOOLBAR BUTTON HANDLERS
         document.getElementById("add-list-button").onmousedown = (event) => {
-            let newList = this.model.addNewList("Untitled", ["?","?","?","?","?"]);            
+            let newList = this.model.addNewList("Untitled", ["?", "?", "?", "?", "?"]);
             this.model.loadList(newList.id);
             this.model.saveLists();
         }
@@ -41,7 +41,7 @@ export default class Top5Controller {
                     let textInput = document.createElement("input");
                     textInput.setAttribute("type", "text");
                     textInput.setAttribute("id", "item-text-input-" + i);
-                    textInput.setAttribute("value", this.model.currentList.getItemAt(i-1));
+                    textInput.setAttribute("value", this.model.currentList.getItemAt(i - 1));
 
                     item.appendChild(textInput);
 
@@ -50,7 +50,7 @@ export default class Top5Controller {
                     }
                     textInput.onkeydown = (event) => {
                         if (event.key === 'Enter') {
-                            this.model.addChangeItemTransaction(i-1, event.target.value);
+                            this.model.addChangeItemTransaction(i - 1, event.target.value);
                         }
                     }
                     textInput.onblur = (event) => {
