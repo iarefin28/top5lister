@@ -207,6 +207,23 @@ export default class Top5Model {
         this.loadLists();
     }
 
+    //UPDATE STATUS BAR FUNCTIONS
+    updateStatusBar(){
+        let statusBar = document.getElementById("top5-statusbar");
+        statusBar.innerHTML = "";
+        let tagToAdd = document.createElement("p");
+        let text = document.createTextNode(this.currentList.getName());
+        tagToAdd.appendChild(text);
+        statusBar.appendChild(tagToAdd);
+        statusBar.firstChild.style.fontSize = "30pt";
+        //statusBar.firstChild.style. = "center";
+        statusBar.firstChild.style.textAlign = "center";
+    }
+    closeStatusBar(){
+        let statusBar = document.getElementById("top5-statusbar");
+        statusBar.innerHTML = "";
+    }
+
     // SIMPLE UNDO/REDO FUNCTIONS
     undo() {
         if (this.tps.hasTransactionToUndo()) {

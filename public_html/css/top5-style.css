@@ -20,7 +20,7 @@ body {
 
 #root {
   background-color: var(--swatch-primary);
-  font-family: "Lexend Exa";
+  font-family: "Trebuchet MS";
   position: absolute;
   width: 80%;
   left: 10%;
@@ -63,6 +63,7 @@ body {
 }
 
 #top5-statusbar {
+  background-color: #ffa07a;
   position: absolute;
   left: 0%;
   top: 90%;

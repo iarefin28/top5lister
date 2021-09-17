@@ -32,6 +32,7 @@
         document.getElementById("close-button").onmousedown = (event) => {
             this.model.clearWorkspace();
             this.model.unselectAll();
+            this.model.closeStatusBar();
         }
         
 
@@ -102,6 +103,10 @@
 
             // GET THE SELECTED LIST
             this.model.loadList(id);
+
+            //UPDATE STATUS BAR
+            this.model.updateStatusBar();
+
         }
         //FOR EDITING A LIST NAME 
         document.getElementById("top5-list-" + id).ondblclick = (event) => {
@@ -120,6 +125,7 @@
                 textInput.onkeydown = (event) => {
                     if(event.key === 'Enter'){
                         this.model.changeListName(id, event.target.value);
+                        this.model.updateStatusBar();
                     }
                 }
                 textInput.onblur = (event) => {
