@@ -126,6 +126,7 @@ export default class Top5View {
         statusBar.appendChild
     }
 
+    //takes care of undo and redo buttons
     updateToolbarButtons(model) {
         let tps = model.tps;
         if (!tps.hasTransactionToUndo()) {
@@ -133,6 +134,24 @@ export default class Top5View {
         }
         else {
             this.enableButton("undo-button");
+        }
+
+        if(!tps.hasTransactionToRedo()){
+            this.disableButton("redo-button");
+        }
+        else{
+            this.enableButton("redo-button");
+        }
+
+        if(model.currentList === null){
+            this.disableButton("close-button");
+            this.disableButton("undo-button");
+            this.disableButton("redo-button");
+            this.enableButton("add-list-button");
+        }
+        else{
+            this.disableButton("add-list-button");
+            this.enableButton("close-button");
         }
     }
 }

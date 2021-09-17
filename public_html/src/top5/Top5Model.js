@@ -151,6 +151,7 @@ export default class Top5Model {
             }
             this.sortLists();   
             this.view.refreshLists(this.top5Lists);
+            this.view.updateToolbarButtons(this);
             return true;
         }        
     }
@@ -169,12 +170,14 @@ export default class Top5Model {
         let oldText = this.currentList.items[id];
         let transaction = new ChangeItem_Transaction(this, id, oldText, newText);
         this.tps.addTransaction(transaction);
+        this.view.updateToolbarButtons(this);
     }
 
     addMoveItemTransaction = (oldIndex, newIndex) => {
         let transaction = new MoveItem_Transaction(this, oldIndex, newIndex);
         this.tps.addTransaction(transaction);
         this.updateTheView();
+        this.view.updateToolbarButtons(this);
     }
 
     changeItem(id, text) {
@@ -191,6 +194,7 @@ export default class Top5Model {
     clearWorkspace(){
         this.view.clearWorkspace();
         this.currentList = null;
+        this.view.updateToolbarButtons(this);
     }
 
     changeListName(id, text){

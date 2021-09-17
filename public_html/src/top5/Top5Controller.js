@@ -19,9 +19,11 @@
     initHandlers() {
         // SETUP THE TOOLBAR BUTTON HANDLERS
         document.getElementById("add-list-button").onmousedown = (event) => {
-            let newList = this.model.addNewList("Untitled", ["?", "?", "?", "?", "?"]);
-            this.model.loadList(newList.id);
-            this.model.saveLists();
+            if(!document.getElementById("add-list-button").classList.contains("disabled")){
+                let newList = this.model.addNewList("Untitled", ["?", "?", "?", "?", "?"]);
+                this.model.loadList(newList.id);
+                this.model.saveLists();
+            }
         }
         document.getElementById("undo-button").onmousedown = (event) => {
             this.model.undo();
@@ -126,6 +128,7 @@
                     if(event.key === 'Enter'){
                         this.model.changeListName(id, event.target.value);
                         this.model.updateStatusBar();
+                        this.model.loadList(id);
                     }
                 }
                 textInput.onblur = (event) => {
@@ -134,6 +137,7 @@
                     //    this.model.changeListName(id, this.model.getList(this.model.getListIndex(id)).getName());
                     //}
                     this.model.changeListName(id, event.target.value);
+                    this.model.loadList(id);
                 }
             }
         }
@@ -170,6 +174,9 @@
                 //console.log("List is removed.");
                 deleteSpan.removeChild(child);
                 modal.classList.remove("is-visible");
+                this.model.clearWorkspace();
+                this.model.unselectAll();
+                this.model.closeStatusBar();
             }
         }
     }
