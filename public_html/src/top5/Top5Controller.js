@@ -81,7 +81,8 @@
                 console.log(id.charAt(5));
                 console.log(id2.charAt(5));
 
-                this.model.currentList.moveItem(id.charAt(5)-1, id2.charAt(5)-1);
+                //this.model.currentList.moveItem(id.charAt(5)-1, id2.charAt(5)-1);
+                this.model.addMoveItemTransaction(id.charAt(5)-1, id2.charAt(5)-1);
                 this.model.updateTheView();
                 this.model.saveLists();
             } 
