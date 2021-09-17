@@ -176,6 +176,10 @@ export default class Top5Model {
         this.saveLists();
     }
 
+    updateTheView(){
+        this.view.update(this.currentList);
+    }
+
     changeListName(id, text){
         //this.currentList.setName(text);
         let listBeingChanged = this.getList(this.getListIndex(id));

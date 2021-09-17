@@ -58,6 +58,30 @@
                     }
                 }
             }
+
+            //drag and drop/** 
+            
+            item.ondragstart = (event) => {
+                event.dataTransfer.setData("text/plain", event.target.id);
+                event.dataTransfer.effectAllowed = "move";
+            }
+            item.ondragover = (event) => {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = "move";
+            }
+            item.ondrop = (event) => {
+                let id = event.dataTransfer.getData("text/plain");
+                let id2 = event.target.id;
+                event.preventDefault();
+
+                console.log(id.charAt(5));
+                console.log(id2.charAt(5));
+
+                this.model.currentList.moveItem(id.charAt(5)-1, id2.charAt(5)-1);
+                this.model.updateTheView();
+                this.model.saveLists();
+            } 
+
         }
     }
 
@@ -90,7 +114,7 @@
                     }
                 }
                 textInput.onblur = (event) => {
-                    console.log("Blur");
+                    //console.log("Blur");
                     //textInput.onmousedown = (event) => {
                     //    this.model.changeListName(id, this.model.getList(this.model.getListIndex(id)).getName());
                     //}
@@ -107,7 +131,7 @@
             let modal = document.getElementById("delete-modal");
             this.listToDeleteIndex = id;
             let listName = this.model.getList(id).getName();
-            console.log(listName);
+            //console.log(listName);
             let deleteSpan = document.getElementById("delete-list-span");
             deleteSpan.innerHTML = "";
             let child = document.createTextNode(listName)
@@ -128,7 +152,7 @@
                 this.model.removeList(id);
                 this.model.saveLists();
                 //this.view.refreshLists(this.model.top5Lists);
-                console.log("List is removed.");
+                //console.log("List is removed.");
                 deleteSpan.removeChild(child);
                 modal.classList.remove("is-visible");
             }
