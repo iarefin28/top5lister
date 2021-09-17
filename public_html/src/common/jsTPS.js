@@ -184,6 +184,16 @@ export default class jsTPS {
         }
     }
 
+    redoTransaction(){
+        if(this.hasTransactionToRedo()){
+            this.performingDo = true;
+            let transaction = this.transactions[this.mostRecentTransaction];
+            transaction.doTransaction();
+            this.mostRecentTransaction++;
+            this.performingDo = false;
+        }
+    }
+
     /**
      * clearAllTransactions
      * 

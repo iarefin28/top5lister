@@ -26,6 +26,10 @@
         document.getElementById("undo-button").onmousedown = (event) => {
             this.model.undo();
         }
+        document.getElementById("redo-button").onmousedown = (event) => {
+            this.model.redo();
+        }
+        
 
         // SETUP THE ITEM HANDLERS
         for (let i = 1; i <= 5; i++) {
