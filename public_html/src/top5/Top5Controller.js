@@ -29,6 +29,10 @@
         document.getElementById("redo-button").onmousedown = (event) => {
             this.model.redo();
         }
+        document.getElementById("close-button").onmousedown = (event) => {
+            this.model.clearWorkspace();
+            this.model.unselectAll();
+        }
         
 
         // SETUP THE ITEM HANDLERS

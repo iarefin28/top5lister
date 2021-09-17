@@ -188,6 +188,11 @@ export default class Top5Model {
         this.saveLists();
     }
 
+    clearWorkspace(){
+        this.view.clearWorkspace();
+        this.currentList = null;
+    }
+
     changeListName(id, text){
         //this.currentList.setName(text);
         let listBeingChanged = this.getList(this.getListIndex(id));
