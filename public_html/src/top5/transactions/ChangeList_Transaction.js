@@ -1,15 +1,14 @@
 import jsTPS_Transaction from "../../common/jsTPS.js"
 
 /**
- * ChangeItem_Transaction
+ * ChangeList_Transaction
  * 
  * This class represents a transaction that updates the text
- * for a given item. It will be managed by the transaction stack.
+ * for a given list. It will be managed by the transaction stack.
  * 
- * @author McKilla Gorilla
- * @author ?
+ * @author Ishan Arefin
  */
-export default class ChangeItem_Transaction extends jsTPS_Transaction {
+export default class ChangeList_Transaction extends jsTPS_Transaction {
     constructor(initModel, initId, initOldText, initNewText) {
         super();
         this.model = initModel;
@@ -19,10 +18,10 @@ export default class ChangeItem_Transaction extends jsTPS_Transaction {
     }
 
     doTransaction() {
-        this.model.changeItem(this.id, this.newText);
+        this.model.changeList(this.id, this.newText);
     }
 
     undoTransaction() {
-        this.model.changeItem(this.id, this.oldText);
+        this.model.changeList(this.id, this.oldText);
     }
 }

@@ -50,6 +50,27 @@ export default class Top5Model {
         this.view = initView;
     }
 
+    //takes care of removing a list from the data structure
+    removeList(id){
+        let listIndex = this.getListIndex(id);
+        this.top5Lists.splice(listIndex, 1);
+        this.resetId();
+        this.view.refreshLists(this.top5Lists);
+    }
+
+    resetId(){
+        let counter = 0;
+        for(let i = 0; i < this.top5Lists.length; i++){
+            if(this.top5Lists[i] !== null){
+                let list = this.top5Lists[i];
+                list.setId(counter);
+                counter++;
+            }
+        }
+
+        this.saveLists();
+    }
+
     addNewList(initName, initItems) {
         let newList = new Top5List(this.nextListId++);
         if (initName)
@@ -57,10 +78,13 @@ export default class Top5Model {
         if (initItems)
             newList.setItems(initItems);
         this.top5Lists.push(newList);
+        this.resetId();
         this.sortLists();
+        this.saveLists();
         this.view.refreshLists(this.top5Lists);
         return newList;
     }
+
 
     sortLists() {
         this.top5Lists.sort((listA, listB) => {
@@ -150,6 +174,20 @@ export default class Top5Model {
         this.currentList.items[id] = text;
         this.view.update(this.currentList);
         this.saveLists();
+    }
+
+    changeListName(id, text){
+        //this.currentList.setName(text);
+        let listBeingChanged = this.getList(this.getListIndex(id));
+        listBeingChanged.setName(text);
+        //console.log(this.currentList.getName());
+        this.view.refreshLists(this.top5Lists);
+        this.loadList(id);
+        this.saveLists();
+        //this.resetId();
+        this.sortLists();
+        this.resetId();
+        this.loadLists();
     }
 
     // SIMPLE UNDO/REDO FUNCTIONS

@@ -65,7 +65,7 @@ export class Top5ListerApp {
     }
 }
 
-window.onload = function() {
+window.onload = function () {
     // MAKE THE APP AND LAUNCH IT
     let app = new Top5ListerApp();
     app.launch();

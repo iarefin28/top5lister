@@ -6,7 +6,7 @@
  * @author McKilla Gorilla
  * @author Ishan Arefin
  */
-export default class Top5Controller {
+ export default class Top5Controller {
     constructor() {
 
     }
@@ -64,11 +64,42 @@ export default class Top5Controller {
     registerListSelectHandlers(id) {
         // FOR SELECTING THE LIST
         document.getElementById("top5-list-" + id).onmousedown = (event) => {
+            this.model.resetId();
             this.model.unselectAll();
 
             // GET THE SELECTED LIST
             this.model.loadList(id);
         }
+        //FOR EDITING A LIST NAME 
+        document.getElementById("top5-list-" + id).ondblclick = (event) => {
+            if(this.model.hasCurrentList()){
+                document.getElementById("top5-list-" + id).innerHTML = "";
+
+                let textInput = document.createElement("input");
+                textInput.setAttribute("type", "text");
+                textInput.setAttribute("id", "top5-list-" + id);
+                textInput.setAttribute("value", this.model.getList(this.model.getListIndex(id)).getName());
+                (document.getElementById("top5-list-" + id)).appendChild(textInput);
+
+                textInput.ondblclick = (event) => {
+                    this.ignoreParentClick(event);
+                }
+                textInput.onkeydown = (event) => {
+                    if(event.key === 'Enter'){
+                        this.model.changeListName(id, event.target.value);
+                    }
+                }
+                textInput.onblur = (event) => {
+                    console.log("Blur");
+                    //textInput.onmousedown = (event) => {
+                    //    this.model.changeListName(id, this.model.getList(this.model.getListIndex(id)).getName());
+                    //}
+                    this.model.changeListName(id, event.target.value);
+                }
+            }
+        }
+
+
         // FOR DELETING THE LIST
         document.getElementById("delete-list-" + id).onmousedown = (event) => {
             this.ignoreParentClick(event);
@@ -76,10 +107,31 @@ export default class Top5Controller {
             let modal = document.getElementById("delete-modal");
             this.listToDeleteIndex = id;
             let listName = this.model.getList(id).getName();
+            console.log(listName);
             let deleteSpan = document.getElementById("delete-list-span");
             deleteSpan.innerHTML = "";
-            deleteSpan.appendChild(document.createTextNode(listName));
+            let child = document.createTextNode(listName)
+            deleteSpan.appendChild(child);
             modal.classList.add("is-visible");
+
+            //to get rid of the dialog box 
+            let cancel = document.getElementById("dialog-cancel-button");
+            cancel.onmousedown = (event) => {
+                deleteSpan.removeChild(child);
+                modal.classList.remove("is-visible");
+            }
+
+            //to confirm and carry out on deleting a list
+            let confirm = document.getElementById("dialog-confirm-button");
+            confirm.onmousedown = (event) => {
+                //listToDeleteIndex = id; listName = lists name
+                this.model.removeList(id);
+                this.model.saveLists();
+                //this.view.refreshLists(this.model.top5Lists);
+                console.log("List is removed.");
+                deleteSpan.removeChild(child);
+                modal.classList.remove("is-visible");
+            }
         }
     }
 

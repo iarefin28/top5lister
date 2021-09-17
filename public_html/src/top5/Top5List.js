@@ -31,6 +31,10 @@ export default class Top5List {
         this.items = initItems;
     }
 
+    setId(id){
+        this.id = id;
+    }
+
     moveItem(oldIndex, newIndex) {
         this.items.splice(newIndex, 0, this.items.splice(oldIndex, 1)[0]);
     }

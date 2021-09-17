@@ -62,16 +62,23 @@ export default class Top5View {
 
     update(list) {
         for (let i = 0; i < 5; i++) {
-            let item = document.getElementById("item-" + (i+1));
+            let item = document.getElementById("item-" + (i + 1));
             item.innerHTML = "";
             item.appendChild(document.createTextNode(list.getItemAt(i)));
         }
     }
 
+    updateListName(id, name) { //added functionality to make sure pressing enter updates the list 
+        let item = document.getElementById('top5-list-' + id);
+        item.innerHTML = "";
+        item.appendChild(document.createTextNode(name));
+    }
+
+
     clearWorkspace() {
         // REMOVE THE ITEMS
         for (let i = 0; i < 5; i++) {
-            let item = document.getElementById("item-" + (i+1));
+            let item = document.getElementById("item-" + (i + 1));
             item.innerHTML = "";
         }
     }
@@ -93,11 +100,30 @@ export default class Top5View {
         listCard.classList.add("selected-list-card");
     }
 
+    mouseOverHighlight(listId) {
+        let listCard = document.getElementById("top5-list-" + listId);
+        //listCard.classList.remove("unselected-list-card");
+        listCard.classList.add("highlighted-list-card");
+    }
+
+    mouseOutUnhighlight(listId) {
+        let listCard = document.getElementById("top5-list-" + listId);
+        listCard.classList.remove("highlighted-list-card");
+        listCard.classList.add("unselected-list-card");
+    }
+
     unhighlightList(listId) {
         // HIGHLIGHT THE LIST
         let listCard = document.getElementById("top5-list-" + listId);
         listCard.classList.add("unselected-list-card");
         listCard.classList.remove("selected-list-card");
+    }
+
+    changeStatusBar(nameToAdd) {
+        let statusBar = document.getElementById("top5-statusbar");
+        let newElement = document.createElement('h3');
+        newElement.setAttribute()
+        statusBar.appendChild
     }
 
     updateToolbarButtons(model) {
@@ -107,6 +133,6 @@ export default class Top5View {
         }
         else {
             this.enableButton("undo-button");
-        }   
+        }
     }
 }
