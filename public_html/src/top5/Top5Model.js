@@ -47,6 +47,15 @@ export default class Top5Model {
         return -1;
     }
 
+    resetColors(){
+        for(let i = 0; i < this.top5Lists.length; i++){
+            let list = this.top5Lists[i];
+            let a = document.getElementById("top5-list-" + list.id);
+            a.style.backgroundColor = "#e1e4cb";
+            a.style.color = "black";
+        }
+    }
+
     setView(initView) {
         this.view = initView;
     }
@@ -111,6 +120,11 @@ export default class Top5Model {
             let list = this.top5Lists[i];
             this.view.unhighlightList(i);
         }
+    }
+
+   
+    highlight(id){
+        this.view.highlightList(id);
     }
 
     loadList(id) {
@@ -222,6 +236,7 @@ export default class Top5Model {
         statusBar.firstChild.style.fontSize = "30pt";
         //statusBar.firstChild.style. = "center";
         statusBar.firstChild.style.textAlign = "center";
+        //statusBar.firstChild.style.top = "60";
     }
     closeStatusBar(){
         let statusBar = document.getElementById("top5-statusbar");

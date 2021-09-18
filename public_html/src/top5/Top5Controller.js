@@ -44,6 +44,7 @@
 
             // AND FOR TEXT EDITING
             item.ondblclick = (ev) => {
+                document.getElementById("item-" + i).setAttribute("draggable", "false");
                 if (this.model.hasCurrentList()) {
                     // CLEAR THE TEXT
                     item.innerHTML = "";
@@ -62,10 +63,12 @@
                     textInput.onkeydown = (event) => {
                         if (event.key === 'Enter') {
                             this.model.addChangeItemTransaction(i - 1, event.target.value);
+                            document.getElementById("item-" + i).setAttribute("draggable", "true");
                         }
                     }
                     textInput.onblur = (event) => {
                         this.model.restoreList();
+                        document.getElementById("item-" + i).setAttribute("draggable", "true");
                     }
                 }
             }
@@ -85,14 +88,15 @@
                 let id2 = event.target.id;
                 event.preventDefault();
 
-                console.log(id.charAt(5));
-                console.log(id2.charAt(5));
+                //console.log(id.charAt(5));
+                //console.log(id2.charAt(5));
 
                 //this.model.currentList.moveItem(id.charAt(5)-1, id2.charAt(5)-1);
                 this.model.addMoveItemTransaction(id.charAt(5)-1, id2.charAt(5)-1);
                 this.model.updateTheView();
                 this.model.saveLists();
             } 
+            
 
         }
     }
@@ -102,9 +106,12 @@
         document.getElementById("top5-list-" + id).onmousedown = (event) => {
             this.model.resetId();
             this.model.unselectAll();
+            this.model.resetColors();
 
             // GET THE SELECTED LIST
             this.model.loadList(id);
+            document.getElementById("top5-list-" + id).style.backgroundColor = "#669966";
+            document.getElementById("top5-list-" + id).style.color = "black";
 
             //UPDATE STATUS BAR
             this.model.updateStatusBar();
@@ -177,6 +184,34 @@
                 this.model.clearWorkspace();
                 this.model.unselectAll();
                 this.model.closeStatusBar();
+            }
+        }
+
+        document.getElementById("top5-list-" + id).onmouseover = (event) => {
+            if(this.model.currentList == null){
+                document.getElementById("top5-list-" + id).style.backgroundColor = "black";
+                document.getElementById("top5-list-" + id).style.color = "white";
+            }
+            else if(this.model.currentList.getId() === id){
+                //doooo nothing in particular!
+            }
+            else{
+                document.getElementById("top5-list-" + id).style.backgroundColor = "black";
+                document.getElementById("top5-list-" + id).style.color = "white";
+            }
+        }
+        document.getElementById("top5-list-" + id).onmouseleave = (event) => {
+            if(this.model.currentList == null){
+                document.getElementById("top5-list-" + id).style.backgroundColor = "#e1e4cb";
+                document.getElementById("top5-list-" + id).style.color = "black";
+            }
+            else if(this.model.currentList.getId() === id){
+                document.getElementById("top5-list-" + id).style.backgroundColor = "#669966";
+                document.getElementById("top5-list-" + id).style.color = "black";
+            }
+            else{
+                document.getElementById("top5-list-" + id).style.backgroundColor = "#e1e4cb";
+                document.getElementById("top5-list-" + id).style.color = "black";
             }
         }
     }
